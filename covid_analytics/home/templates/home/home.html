@@ -1,0 +1,93 @@
+{% extends 'home/base/base.html' %}
+{% load static %}
+
+
+{% block title %}Covid Analytics{% endblock %}
+
+{% block body %}
+<div style="position: relative;">
+    <nav class="navbar navbar-expand-sm navbar-light"
+        style="background-color: transparent; position: absolute; width: 100%; z-index: 100;">
+        <a class="navbar-brand text-white" href="/">CovidAnalytics</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="dashboard/">Dashboard</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="jumbotron jumbotron-fluid"
+        style="height: 800px; background-image: url('{% static background_image_url %}'); background-size: cover; background-position: center; color: #fff;">
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Content for the first card -->
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit magnam enim, quibusdam adipisci beatae rerum. Autem culpa quas, maxime fuga deleniti delectus totam reprehenderit blanditiis sint unde molestiae nisi maiores.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Content for the second card -->
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe minus quaerat ex praesentium at voluptas possimus dolorum! Error, aspernatur, tenetur voluptas alias, rerum aliquam deleniti quasi accusantium nisi ratione est.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Content for the third card -->
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores laudantium sequi adipisci iste consequuntur? Similique, quasi dignissimos nostrum, voluptate iure distinctio sapiente aliquam ad, laudantium quidem reiciendis id esse corrupti.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Content for the fourth card -->
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum itaque repudiandae cumque cum. Iure odio praesentium labore quos, molestias ipsa perferendis velit eius quis in saepe fugit ratione. Consequuntur, vitae.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Contact Us</h4>
+                    <p>Email: kumar@ankur.com</p>
+                    <p>Phone: (123) 456-7890</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Follow Us</h4>
+                    <p>Facebook</p>
+                    <p>Twitter</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Address</h4>
+                    <p>Patna</p>
+                    <p>City, State Bihar</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+{% endblock %}
