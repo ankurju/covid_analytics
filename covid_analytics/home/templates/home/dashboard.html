@@ -1,11 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>This is Dashboard page</h1>
-</body>
-</html>
+{% extends 'home/base/base.html' %}
+{% load static %}
+
+
+{% block title %}Covid Analytics{% endblock %}
+{% block body %}
+<h1>Dashboard</h1>
+    
+<div class="row">
+    <div class="col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Total Deaths</h5>
+                <p class="card-text">{{ total_deaths }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Total Vaccinated</h5>
+                <p class="card-text">{{ total_vaccinated }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Chart Title</h5>
+        <div id="chart"></div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Bar Chart</h5>
+        <img src="data:image/png;base64,{{ plot_data }}" />
+    </div>
+</div>
+{% endblock %}
