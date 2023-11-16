@@ -11,28 +11,64 @@ def home(request):
 
 
 def dashboard(request):
-    total_deaths = 15000
-    total_vaccinated = 100000
 
     categories = ['Category A', 'Category B', 'Category C']
     values = [20, 14, 23]
 
-    plt.figure(figsize=(8, 6))
-    plt.bar(categories, values)
-    plt.title('Bar Chart')
-    plt.xlabel('Categories')
-    plt.ylabel('Values')
+    # plt.figure(figsize=(8, 6))
+    # plt.bar(categories, values)
+    # plt.title('Bar Chart')
+    # plt.xlabel('Categories')
+    # plt.ylabel('Values')
     
-    buffer = io.BytesIO()
-    plt.savefig(buffer, format='png')
-    buffer.seek(0)
-    plot_data = urllib.parse.quote(base64.b64encode(buffer.read()).decode())
+    # buffer = io.BytesIO()
+    # plt.savefig(buffer, format='png')
+    # buffer.seek(0)
+    # plot_data = urllib.parse.quote(base64.b64encode(buffer.read()).decode())
 
+    countryData=[
+        {
+            'countryName' : 'India',
+            'total_deaths': 1000000,
+            'total_vaccinated': 20000,
+            'total_hospitalizations':10000,
+        },
+        {
+            'countryName' : 'New Zealand',
+            'total_deaths': 2000000,
+            'total_vaccinated': 30000,
+            'total_hospitalizations':20000,
+        },
+        {
+            'countryName' : 'Pakistan',
+            'total_deaths': 3000000,
+            'total_vaccinated': 40000,
+            'total_hospitalizations':30000,
+        },
+        {
+            'countryName' : 'America',
+            'total_deaths': 4000000,
+            'total_vaccinated': 50000,
+            'total_hospitalizations':50000,
+        }
+    ]
+
+
+    for country in countryData:
+        # Create a new plot for each country
+        plt.figure(figsize=(8, 6))
+        plt.bar(categories, values)
+        plt.title(f'Bar Chart - {country["countryName"]}')
+        plt.xlabel('Categories')
+        plt.ylabel('Values')
+
+        buffer = io.BytesIO()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+        country['plot_data'] = urllib.parse.quote(base64.b64encode(buffer.read()).decode())
 
 
     context = {
-        'total_deaths': total_deaths,
-        'total_vaccinated': total_vaccinated,
-        'plot_data':plot_data
+        'countryData':countryData
     }
     return render(request,'home/dashboard.html',context)
