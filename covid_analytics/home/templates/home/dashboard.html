@@ -5,7 +5,8 @@
 {% block title %}Covid Analytics{% endblock %}
 {% block body %}
 
-<main class="container mt-4">
+
+<main class="container mt-4" style="background-color: #f8f9fa;">
     <h1 class="text-center">Dashboard</h1>
 
     <div class="mb-3">
@@ -21,7 +22,7 @@
 
     <div class="row">
         <div class="col-lg-4 mb-4">
-            <div class="card">
+            <div class="card" style="background-color: #d9534f; color: #fff;">
                 <div class="card-body">
                     <h5 class="card-title">Total Deaths</h5>
                     <p class="card-text" id="totalDeathsText"></p>
@@ -29,7 +30,7 @@
             </div>
         </div>
         <div class="col-lg-4 mb-4">
-            <div class="card">
+            <div class="card" style="background-color: #5bc0de; color: #fff;">
                 <div class="card-body">
                     <h5 class="card-title">Total Vaccinated</h5>
                     <p class="card-text" id="totalVaccinatedText"></p>
@@ -37,7 +38,7 @@
             </div>
         </div>
         <div class="col-lg-4 mb-4">
-            <div class="card">
+            <div class="card" style="background-color: #5cb85c; color: #fff;">
                 <div class="card-body">
                     <h5 class="card-title">Total Hospitalizations</h5>
                     <p class="card-text" id="totalHospitalizationsText"></p>
@@ -49,10 +50,10 @@
     <div class="row">
         <!-- Add the country-specific graph for the selected country -->
         <div class="col-lg-12 mb-4">
-            <div class="card">
+            <div class="card" style="background-color: #f8f9fa;">
                 <div class="card-body">
-                    <h5 class="card-title">Graph for {{ countryData.0.countryName }}</h5>
-                    <img src="data:image/png;base64,{{ countryData.0.plot_data }}" />
+                    <h5 class="card-title">Graph for <span id="selectedCountryGraph"></span></h5>
+                    <img id="countryGraph" src="" />
                 </div>
             </div>
         </div>
@@ -88,6 +89,10 @@
                 var selectedCountryData = countryData.find(function (country) {
                     return country.countryName === selectedCountry;
                 });
+
+                //Update the graph source with country data in countryData array
+                countryGraph.src="data:image/png;base64," + selectedCountryData.plot_data;
+                selectedCountryGraph.textContent = selectedCountryData.countryName;
 
                 // Update card text content
                 totalDeathsText.textContent = 'Total Deaths: ' + selectedCountryData.total_deaths;
