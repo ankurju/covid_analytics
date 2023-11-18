@@ -5,6 +5,8 @@ from datetime import datetime
 def process_data(csv_file_path,countries_of_interest):
     total_deaths_by_country_and_month = {}
     total_cases_by_country_and_month = {}
+    available_years = set()
+    
     with open(csv_file_path, 'r') as csv_file:
         reader = csv.DictReader(csv_file)
         for row in reader:
@@ -16,6 +18,7 @@ def process_data(csv_file_path,countries_of_interest):
             if country in countries_of_interest:
                 # Parse the date to get the month
                 date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+                year_key = date_obj.strftime('%Y')
                 month_key = date_obj.strftime('%Y-%m')
 
                 # Initialize the dictionary if it doesn't exist
@@ -30,7 +33,10 @@ def process_data(csv_file_path,countries_of_interest):
                 
                 total_cases_by_country_and_month[country][month_key] = \
                     total_cases_by_country_and_month[country].get(month_key,0) + total_cases
-    return total_cases_by_country_and_month,total_deaths_by_country_and_month
+                
+                available_years.add(year_key)
+
+    return total_cases_by_country_and_month , total_deaths_by_country_and_month ,list(available_years)
 # Print the results
 # for country, monthly_data in total_deaths_by_country_and_month.items():
 #     print(f"{country}:")
