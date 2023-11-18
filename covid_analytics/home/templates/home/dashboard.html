@@ -5,8 +5,9 @@
 {% block title %}Covid Analytics{% endblock %}
 {% block body %}
 
-
 <main class="container mt-4" style="background-color: #f8f9fa;">
+    <a href="{% url 'homepage' %}" class="btn btn-primary btn-sm ms-3 mt-3" role="button">Go to Homepage</a>
+
     <h1 class="text-center">Dashboard</h1>
 
     <div class="mb-3">
@@ -47,17 +48,46 @@
         </div>
     </div>
 
-    <div class="row">
-        <!-- Add the country-specific graph for the selected country -->
-        <div class="col-lg-12 mb-4">
-            <div class="card" style="background-color: #f8f9fa;">
-                <div class="card-body">
-                    <h5 class="card-title">Graph for <span id="selectedCountryGraph"></span></h5>
-                    <img id="countryGraph" src="" />
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="card" style="background-color: #f8f9fa;">
+            <div class="card-body">
+                <h5 class="card-title">Graph for <span id="selectedCountryGraph1"></span></h5>
+                <!-- Dropdown menu for years -->
+                <div class="mb-3">
+                    <label for="yearDropdown1" class="form-label">Select Year:</label>
+                    <select id="yearDropdown1" class="form-select">
+                        <!-- Populate the dropdown with available years -->
+                        {% for year in available_years %}
+                            <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
+                <!-- Image for the graph -->
+                <img id="countryGraph1" src="" style="max-width: 100%;" />
             </div>
         </div>
     </div>
+    <div class="col-lg-6 mb-4">
+        <div class="card" style="background-color: #f8f9fa;">
+            <div class="card-body">
+                <h5 class="card-title">Graph for <span id="selectedCountryGraph2"></span></h5>
+                <!-- Dropdown menu for years -->
+                <div class="mb-3">
+                    <label for="yearDropdown2" class="form-label">Select Year:</label>
+                    <select id="yearDropdown2" class="form-select">
+                        <!-- Populate the dropdown with available years -->
+                        {% for year in available_years %}
+                            <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- Image for the graph -->
+                <img id="countryGraph2" src="" style="max-width: 100%;" />
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- Bootstrap JS and Popper.js (required for Bootstrap) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
@@ -65,49 +95,18 @@
     <script>
         var countryData = {{ countryData|safe }};
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Get the selected country dropdown element
-            var countryDropdown = document.getElementById('countryDropdown');
-
-            // Get the card text elements
-            var totalDeathsText = document.getElementById('totalDeathsText');
-            var totalVaccinatedText = document.getElementById('totalVaccinatedText');
-            var totalHospitalizationsText = document.getElementById('totalHospitalizationsText');
-
-            // Set initial values based on the first country
-            updateCardData(countryDropdown.value);
-
-            // Add event listener for dropdown change
-            countryDropdown.addEventListener('change', function () {
-                var selectedCountry = countryDropdown.value;
-                updateCardData(selectedCountry);
-            });
-
-            function updateCardData(selectedCountry) {
-                // Find the selected country data in the countryData array
-                var selectedCountryData = countryData.find(function (country) {
-                    return country.countryName === selectedCountry;
-                });
-
-                //Update the graph source with country data in countryData array
-                countryGraph.src="data:image/png;base64," + selectedCountryData.plot_data;
-                selectedCountryGraph.textContent = selectedCountryData.countryName;
-
-                // Update card text content
-                totalDeathsText.textContent = 'Total Deaths: ' + selectedCountryData.total_deaths;
-                totalVaccinatedText.textContent = 'Total Vaccinated: ' + selectedCountryData.total_vaccinated;
-                totalHospitalizationsText.textContent = 'Total Hospitalizations: ' + selectedCountryData.total_hospitalizations;
-            }
-        });
-    </script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
 </main>
 
 <style>
     /* Custom styling for the dropdown */
     .custom-dropdown {
-        width: auto; /* Set the desired width */
-        max-width: 200px; /* Optionally set a maximum width */
+        width: auto; 
+        max-width: 200px;
+    }
+    .btn-goto-homepage {
+        margin-top: 10px;
+        margin-left: 10px;
     }
 </style>
 
