@@ -1,0 +1,125 @@
+{% extends 'home/base/base.html' %}
+{% load static %}
+
+
+{% block title %}Covid Analytics{% endblock %}
+{% block body %}
+
+<main class="container mt-4" style="background-color: #f8f9fa;">
+    <a href="{% url 'homepage' %}" class="btn btn-primary btn-sm ms-3 mt-3" role="button">Go to Homepage</a>
+
+    <h1 class="text-center">Dashboard</h1>
+
+    <div class="row">
+        <div class="col-lg-6 mb-4 ml-auto">
+            <form method="GET" action="{% url 'redirect_plot_page' %}">
+                {% csrf_token %}
+                <label for="plotDropdown" class="form-label">Select a Plot:</label>
+                <div class="input-group">
+                    <select name="plot_type" class="form-select custom-dropdown">
+                        <option value="cases">Cases</option>
+                        <option value="deaths">Deaths</option>
+                        <option value="vaccinations">Vaccinations</option>
+                        <option value="hospitalizations">Hospitalizations</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Go</button>
+            </form>
+        </div>
+
+        <div class="col-lg-6 mb-4 mr-auto">
+            <label for="countryDropdown" class="form-label">Select a Country:</label>
+            <div class="input-group">
+                <select id="countryDropdown" class="form-select custom-dropdown">
+                    {% for country in countryData %}
+                        <option value="{{ country.countryName }}" {% if forloop.first %}selected{% endif %}>{{ country.countryName }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card" style="background-color: #5bc0de; color: #fff;">
+                <div class="card-body">
+                    <h5 class="card-title">Total Cases</h5>
+                    <p class="card-text" id="totalCasesText"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="card" style="background-color: #f8f9fa;">
+            <div class="card-body">
+                <h5 class="card-title">Graph for <span id="selectedCountryGraph"></span></h5>
+                <!-- Dropdown menu for years -->
+                <div class="mb-3">
+                    <label for="yearDropdown" class="form-label">Select Year:</label>
+                    <select id="yearDropdown" class="form-select">
+                        <!-- Populate the dropdown with available years -->
+                        {% for year in available_years %}
+                            <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- Image for the graph -->
+                <img id="countryGraph" src="" style="max-width: 100%;" />
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+        <div class="card" style="background-color: #f8f9fa;">
+            <div class="card-body">
+                <h5 class="card-title">Combined Graph</h5>
+                <!-- Dropdown menu for years -->
+                <div class="mb-3">
+                    <label for="yearDropdownCombined" class="form-label">Select Year:</label>
+                    <select id="yearDropdownCombined" class="form-select">
+                        <!-- Populate the dropdown with available years -->
+                        {% for year in available_years %}
+                            <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- Image for the graph -->
+                <img id="combinedGraph" src="" style="max-width: 100%;" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{{ countryData|json_script:'countryData' }}
+{{ plot_data_cases_combined|json_script:'plot_data_cases_combined' }}
+
+
+   <!-- Bootstrap JS and Popper.js (required for Bootstrap) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+var countryData = JSON.parse(document.getElementById('countryData').textContent);
+var plot_data_cases_combined = JSON.parse(document.getElementById('plot_data_cases_combined').textContent);
+
+</script>
+    
+    <script src="{% static 'js/cases.js' %}"></script>
+
+</main>
+
+<style>
+    /* Custom styling for the dropdown */
+    .custom-dropdown {
+        width: auto; 
+        max-width: 200px;
+    }
+    .btn-goto-homepage {
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+</style>
+
+{% endblock %}

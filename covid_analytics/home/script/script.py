@@ -1,7 +1,7 @@
 import csv
 from datetime import datetime
 
-
+#utility function to gather deaths and cases data from csv
 def process_deaths_cases_data(csv_file_path, countries):
     total_deaths_by_country_and_year = {}
     total_cases_by_country_and_year = {}
@@ -55,6 +55,7 @@ def process_deaths_cases_data(csv_file_path, countries):
 
     return total_cases_by_country_and_year, total_deaths_by_country_and_year, list(available_years),overall_total_cases_by_country,overall_total_deaths_by_country
 
+#utility function to gather vaccination data from csv
 def process_vaccination_data(csv_file_path,countries):
     total_vaccinations_by_country_and_year = {}
     overall_total_vaccinations_by_country={}
@@ -65,7 +66,7 @@ def process_vaccination_data(csv_file_path,countries):
         for row in reader:
             date_str = row['date']
             country = row['location']
-            total_vaccinations = float(row['total_vaccinations']) if row['total_vaccinations'] else 0.0
+            total_vaccinations = float(row['daily_vaccinations']) if row['daily_vaccinations'] else 0.0
 
             if country in countries:
                 # Parse the date to get the month and year
@@ -86,7 +87,7 @@ def process_vaccination_data(csv_file_path,countries):
                 if year_key not in total_vaccinations_by_country_and_year[country]:
                     total_vaccinations_by_country_and_year[country][year_key] = {}
 
-                # Update the total deaths for the specific month and year
+                # Update the total vaccination for the specific month and year
                 total_vaccinations_by_country_and_year[country][year_key][month_key] = \
                     total_vaccinations_by_country_and_year[country][year_key].get(month_key, 0) + total_vaccinations
 
@@ -94,6 +95,7 @@ def process_vaccination_data(csv_file_path,countries):
 
     return total_vaccinations_by_country_and_year,overall_total_vaccinations_by_country,list(available_years)
 
+#utility function to gather hospitalisation data from csv
 def process_hospitalization_data(csv_file_path,countries):
     total_hospitalizations_by_country_and_year = {}
     overall_total_hospitalization_by_country={}
@@ -126,11 +128,11 @@ def process_hospitalization_data(csv_file_path,countries):
                     if year_key not in total_hospitalizations_by_country_and_year[country]:
                         total_hospitalizations_by_country_and_year[country][year_key] = {}
 
-                    # Update the total deaths for the specific month and year
+                    # Update the total hospitalization for the specific month and year
                     total_hospitalizations_by_country_and_year[country][year_key][month_key] = \
                         total_hospitalizations_by_country_and_year[country][year_key].get(month_key, 0) + total_hospitalizations
 
                     available_years.add(year_key)
 
-    return total_hospitalizations_by_country_and_year,overall_total_hospitalization_by_country,(list(available_years))
+    return total_hospitalizations_by_country_and_year,overall_total_hospitalization_by_country,list(available_years)
 
